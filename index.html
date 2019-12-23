@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="css/style.css" />
+		<title>Fluid Simulation</title>
+	</head>
+	<body>
+		<canvas id="canvas" width="1000" height="500">Brak obsługi Canvas</canvas>
+		<div id="infoBox">
+			<input type="button" id="show" value="Show/Hide" />
+			<div id="rest">
+				<ul id="fps">
+					<li>-- fps</li>
+					<li>-- particles</li>
+				</ul>
+				<input type="button" id="gravityChangerButton" value="Change gravity"/>
+				<label><input type="checkbox" id="showGrid" />Show grid</label>
+			</div>
+		</div>
+		<script src="js/lib/three.js"></script>
+		<script data-main="js/worldConfig/main.js" src="js/lib/require.js"></script>
+	</body>
+</html>
