@@ -1,4 +1,4 @@
-define(['jquery', '../lib/jquery.mousewheel.min'], function ($, jqueryMouseWheel) {
+define(['jquery', '../../../lib/jquery.mousewheel.min'], function ($, jqueryMouseWheel) {
 	return function (camera) {
 		$('#canvas').mousewheel(function (e) {
 			if(e.originalEvent.deltaY === 0)

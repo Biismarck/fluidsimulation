@@ -3,6 +3,7 @@ define(['jquery'], function ($) {
 	var lis = document.getElementById("fps").children;
 
 	function loop(world, dt) {
+		//用数组实现队列
 		lastDts.push(dt);
 		lastDts.shift();
 

@@ -1,4 +1,4 @@
-define(['jquery', '../../fluid-simulation-engine/geometry/Vector'], function ($, Vector) {
+define(['jquery', '../../../fluid-simulation-engine/geometry/Vector'], function ($, Vector) {
 	return {
     changeGravity: function (world) {
       var g = world.getGravity();

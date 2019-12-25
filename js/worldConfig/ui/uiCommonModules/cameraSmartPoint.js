@@ -1,4 +1,4 @@
-define(['../fluid-simulation-engine/geometry/Polygon'], function (Polygon) {
+define(['../../../fluid-simulation-engine/geometry/Polygon'], function (Polygon) {
 	return function (camera, polygonsArr) {
 		const MARGIN = 1.05;
 		if(polygonsArr.length === 0)
