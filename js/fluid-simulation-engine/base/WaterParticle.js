@@ -1,4 +1,9 @@
-define(['./Particle', '../geometry/Vector', '../others/inheritFrom'], function (Particle, Vector, inheritFrom) {
+define(
+	[
+		'./Particle', 
+		'../geometry/Vector', 
+		'../others/inheritFrom'
+	], function (Particle, Vector, inheritFrom) {
 	WaterParticle.inheritFrom = inheritFrom;
 	function WaterParticle(x, y) {
 		this.coords = new Vector(x, y);

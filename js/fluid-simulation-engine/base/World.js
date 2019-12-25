@@ -1,12 +1,12 @@
 define(
 	[
-		'./Grid', 
-		'./BodiesGrid', 
-		'../geometry/Vector', 
-		'../base/Body', 
-		'../geometry/LineSegment', 
+		'./Grid',
+		'./BodiesGrid',
+		'../geometry/Vector',
+		'../base/Body',
+		'../geometry/LineSegment',
 		'../geometry/Polygon'
-	], function (Grid, BodiesGrid, Vector,Body ,LineSegment, Polygon) {
+	], function (Grid, BodiesGrid, Vector, Body, LineSegment, Polygon) {
 		function World() {
 			this.gravity = new Vector(0.0, -0.5);
 			this.timeSpeed = 1.0 / 60;
@@ -57,8 +57,8 @@ define(
 			];
 			this.addBody(new Body(lolWall).setCoords(new Vector(0, 200)));
 		}
-		World.prototype.setStatus = function (status){
-			this.isStart=status;
+		World.prototype.setStatus = function (status) {
+			this.isStart = status;
 		}
 		World.prototype.changeStatus = function () {
 			if (this.isStart)
@@ -124,6 +124,11 @@ define(
 			}
 			this.addParticles(particlesArr);
 			return this;
+		}
+		World.prototype.setParticlesColor = function (color) {
+			for (let i = 0; i < this.particles.length; i++) {
+				this.particles[i].setColor(color);
+			}
 		}
 		World.prototype.clearParticles = function () {
 			this.particles.splice(0, this.particles.length);

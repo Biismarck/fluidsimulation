@@ -2,7 +2,7 @@ define(function () {
 	var NANS = 0;
 	return function (particles) {
 		var n = 0;
-		for(var i = 0; i < particles.length; i++) {
+		for(let i = 0; i < particles.length; i++) {
 			if(isNaN(particles[i].coords.x)) {
 				n++;
 			}

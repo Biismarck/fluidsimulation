@@ -17,14 +17,14 @@ define(['jquery'], function ($) {
 
 	}
 	function updateDOM(data) {
-		for(var i = 0; i < data.length && i < lis.length; i++) {
+		for(let i = 0; i < data.length && i < lis.length; i++) {
 			lis[i].innerHTML = data[i].value.toFixed(0) + ' ' + data[i].text;
 		}
 	}
 	function getAvgVal(arr) {
 		var sum = 0;
 		var n = 0;
-		for(var i = 0; i < arr.length; i++) {
+		for(let i = 0; i < arr.length; i++) {
 			if(!isNaN(arr[i])) {
 				sum += arr[i];
 				n++;

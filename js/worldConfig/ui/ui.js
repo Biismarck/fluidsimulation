@@ -44,6 +44,10 @@ define(
           $('#gravityChangerButton').click(function () {
             gravityButton.changeGravity(world);
           });
+          $('#colorChangerButton').click(function () {
+            world.setParticlesColor('#00FF00');
+            THIS.resetUI();
+          });
           $('#starterButton').click(function () {
             startButton.startSimulation(world);
             THIS.resetUI();
@@ -61,12 +65,12 @@ define(
         addToScene: function () {
           //Particles:
           this.geometry = new THREE.Geometry();
-          for (i = 0; i < world.particles.length; i++) {
+          for (let i = 0; i < world.particles.length; i++) {
             var vertex = new THREE.Vector3(0, 0, 0);
             this.geometry.vertices.push(vertex);
           }
           this.geometry.colors = [];
-          for (var i = 0; i < this.geometry.vertices.length; i++)
+          for (let i = 0; i < this.geometry.vertices.length; i++)
             this.geometry.colors[i] = new THREE.Color(world.particles[i].color);
 
           var material = new THREE.PointsMaterial({ size: 2, vertexColors: THREE.VertexColors, fog: false, sizeAttenuation: false });
@@ -75,11 +79,11 @@ define(
 
           //Bodies:
           var shapes = [];
-          for (var i = 0; i < world.bodies.length; i++) {
+          for (let i = 0; i < world.bodies.length; i++) {
             var bodyShape = new THREE.Shape();
             var start = world.bodies[i].coords;
             bodyShape.moveTo(start.x + world.bodies[i].sides[0].p1.x, start.y + world.bodies[i].sides[0].p1.y);
-            for (var j = 0; j < world.bodies[i].sides.length; j++) {
+            for (let j = 0; j < world.bodies[i].sides.length; j++) {
               var p2 = world.bodies[i].sides[j].p2;
               bodyShape.lineTo(start.x + p2.x, start.y + p2.y);
             }
@@ -90,7 +94,7 @@ define(
           this.scene.add(this.bodyMesh);
         },
         updateVertices: function () {
-          for (var i = 0; i < this.geometry.vertices.length; i++) {
+          for (let i = 0; i < this.geometry.vertices.length; i++) {
             this.geometry.vertices[i].x = world.particles[i].coords.x;
             this.geometry.vertices[i].y = world.particles[i].coords.y;
           }

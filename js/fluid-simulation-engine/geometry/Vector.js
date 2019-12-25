@@ -85,7 +85,7 @@ define(function () {
 	Vector.findTheShortestVector = function(vectorsArray) {
 		var shortestVector = vectorsArray[0];
 		var shortestLength = shortestVector.getLength();
-		for(var k = 0; k < vectorsArray.length; k++) {
+		for(let k = 0; k < vectorsArray.length; k++) {
 			var length = vectorsArray[k].getLength();
 			if(length < shortestLength) {
 				shortestVector = vectorsArray[k];
