@@ -7,6 +7,7 @@ require(
 	[
 		'jquery', 'initWorld', './ui/ui', './ui/showPerformanceData', './debug/nansDetector'
 	],
+	//回调函数，当前面指定的模块加载成功后，它将被调用。加载的模块会以参数形式传入该函数，从而在回调函数内部就可以使用这些模块
 	function($, initWorld, ui, showPerformanceData, nansDetector) {
 		var world = initWorld();
 		var uiObj = ui(world);

@@ -1,4 +1,5 @@
 define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
+	//多边形
 	function Polygon(arr) {
 		this.coords = new Vector(0, 0);
 		this.angle = 0;
@@ -14,10 +15,12 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 			}
 		}
 	}
+
 	Polygon.prototype.setCoords = function (coords) {
 		this.coords = coords;
 		return this;
 	}
+	//记录多边形顶点x,y的最小值
 	Polygon.prototype.minPoint = function (absolute) {	//Default: absolute = true;
 		var minPoint = new Vector(this.sides[0].p1.x, this.sides[0].p1.y);
 		for(var i = 0; i < this.sides.length; i++) {
@@ -33,6 +36,7 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 		}
 		return minPoint;
 	}
+	//记录多边形顶点x,y的最大值
 	Polygon.prototype.maxPoint = function (absolute) {	//Default: absolute = true;
 		var maxPoint = new Vector(this.sides[0].p1.x, this.sides[0].p1.y);
 		for(var i = 0; i < this.sides.length; i++) {
@@ -48,6 +52,7 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 		}
 		return maxPoint;
 	}
+	//点是否在多边形内
 	Polygon.prototype.containsPoint = function (point, absolute) {	//May not work for points on the side of the polygon //Default: absolute = true;
 		var relativePoint = new Vector(point);
 		if(typeof absolute === "undefined" || absolute) {
@@ -70,6 +75,7 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 		}
 		return !!(intersections % 2);
 	}
+
 	Polygon.prototype.getVolume = function () {		//Faster and more precisious method needed
 		var minPoint = this.minPoint(false);
 		var maxPoint = this.maxPoint(false);
@@ -86,6 +92,7 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 		}
 		return volume;
 	}
+
 	Polygon.prototype.getMomentOfInertia = function () {		//Faster and more precisious method needed
 		var minPoint = this.minPoint(false);
 		var maxPoint = this.maxPoint(false);
@@ -103,6 +110,7 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 		}
 		return result;
 	}
+
 	Polygon.prototype.getClosestSide = function (point) {
 		var relativePoint = new Vector(point).subtract(this.coords);
 		var ep;
@@ -126,6 +134,7 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 		}
 		return this.sides[closestSideIndex];
 	}
+	
 	Polygon.prototype.getExtractedPoint = function (point) {	//Method doesn't work if point is already outside of the polygon	//Absolute
 		const margin = 0.001;
 		var relativePoint = new Vector(point).subtract(this.coords);

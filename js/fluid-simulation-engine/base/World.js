@@ -23,8 +23,8 @@ define(
 		}
 	}
 	World.prototype.setOutOfBoundsBehaviour = function (respawnCoords, isOutOfBoundsFunc) {
-		this.isOutOfBoundsFunc = isOutOfBoundsFunc;
 		this.respawnCoords = respawnCoords;
+		this.isOutOfBoundsFunc = isOutOfBoundsFunc;
 		return this;
 	}
 	World.prototype.setCoeffs = function (coeffs) {

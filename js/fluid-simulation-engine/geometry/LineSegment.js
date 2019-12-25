@@ -1,13 +1,16 @@
 define(['./Vector'], function (Vector) {
+	//定义线段
 	function LineSegment(point1, point2) {
 		this.p1 = point1;
 		this.p2 = point2;
 	}
+	//获取直线方程
 	LineSegment.prototype.getLinearEquation = function() {	//Ax + By + C = 0
 		if(this.linearEquation === undefined)
 			this.linearEquation = this.calculateLinearEquation();
 		return this.linearEquation;
 	}
+	//计算直线方程
 	LineSegment.prototype.calculateLinearEquation = function() {	//Ax + By + C = 0
 		var point1, point2;
 		if(this.p2.x > this.p1.x) {
@@ -34,6 +37,7 @@ define(['./Vector'], function (Vector) {
 			eq[i] /= k;
 		return eq;
 	}
+	//计算线段的方向向量
 	LineSegment.prototype.calculateUnitVector = function() {
 		var vec = new Vector(this.p2).subtract(this.p1);
 		return vec.multiplyBy(1/vec.getLength());
@@ -43,6 +47,7 @@ define(['./Vector'], function (Vector) {
 			this.unitVector = this.calculateUnitVector();
 		return this.unitVector;
 	}
+	//计算线段长度
 	LineSegment.prototype.calculateLength = function() {
 		return this.p1.getDistance(this.p2);
 	}
@@ -51,6 +56,7 @@ define(['./Vector'], function (Vector) {
 			this.length = this.calculateLength();
 		return this.length;
 	}
+	//计算两线段交点
 	LineSegment.prototype.crossingPoint = function(lineSegment) { //returns null if crossing point doesn't exist
 		var eq1 = this.getLinearEquation();
 		var eq2 = lineSegment.getLinearEquation();
@@ -80,7 +86,8 @@ define(['./Vector'], function (Vector) {
 		}
 		return crossingPoint;
 	}
-	LineSegment.prototype.containsPoint = function(point) {	//Warning! Method only checks if point is within rectangle made of LineSegment's edge points
+	//检查点是否在直线为对角线的矩形框内
+	LineSegment.prototype.containsPoint = function(point) {	
 		var minX = Math.min(this.p1.x, this.p2.x);
 		var minY = Math.min(this.p1.y, this.p2.y);
 		var maxX = Math.max(this.p1.x, this.p2.x);
@@ -92,6 +99,7 @@ define(['./Vector'], function (Vector) {
 			&&	point.y <= maxY
 		);
 	}
+	//获取点到直线的投影点
 	LineSegment.prototype.getProjectedPoint = function(point) {
 		var eq = this.getLinearEquation();
 		var projectedPoint = new Vector();

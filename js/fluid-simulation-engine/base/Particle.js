@@ -43,9 +43,14 @@ define(['../geometry/Vector'], function (Vector) {
 		this.velocity.y += dvy;
 		return this;
 	}
+	//调用第三方插件渲染
 	Particle.prototype.render = function (ctx) {
 		ctx.fillStyle = this.color;
 		ctx.fillRect(this.coords.x, this.coords.y, 4, 4);
+		return this;
+	}
+	Particle.prototype.setColor=function(color){
+		this.color=color;
 		return this;
 	}
 	Particle.prototype.getDistance = function (particle) {
