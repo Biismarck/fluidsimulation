@@ -1,11 +1,12 @@
 define(
 	[
-		'./Grid'
-		, './BodiesGrid'
-		, '../geometry/Vector'
-		, '../geometry/LineSegment'
-		, '../geometry/Polygon'
-	], function (Grid, BodiesGrid, Vector, LineSegment, Polygon) {
+		'./Grid', 
+		'./BodiesGrid', 
+		'../geometry/Vector', 
+		'../base/Body', 
+		'../geometry/LineSegment', 
+		'../geometry/Polygon'
+	], function (Grid, BodiesGrid, Vector,Body ,LineSegment, Polygon) {
 		function World() {
 			this.gravity = new Vector(0.0, -0.5);
 			this.timeSpeed = 1.0 / 60;
@@ -23,13 +24,49 @@ define(
 			}
 			this.isStart = false;
 		}
-		World.prototype.setStatus = function () {
+		World.prototype.initWorld = function () {
+			//初始化墙体
+			var width = 1300;
+			var height = 1000;
+			var wallThickness = 100;
+
+			var horizontalWall = [
+				new Vector(0, 0)
+				, new Vector(width + 2 * wallThickness, 0)
+				, new Vector(width + 2 * wallThickness, wallThickness)
+				, new Vector(0, wallThickness)
+			];
+			var verticalWall = [
+				new Vector(0, 0)
+				, new Vector(wallThickness, 0)
+				, new Vector(wallThickness, height + wallThickness)
+				, new Vector(0, height + wallThickness)
+			];
+			this.addBody(new Body(horizontalWall).setCoords(new Vector(0, 0)));
+			this.addBody(new Body(horizontalWall).setCoords(new Vector(0, height)));
+			this.addBody(new Body(verticalWall).setCoords(new Vector(0, 0)));
+			this.addBody(new Body(verticalWall).setCoords(new Vector(width + wallThickness, 0)));
+
+			var lolWall = [
+				new Vector(0, 0)
+				, new Vector(550, 0)
+				, new Vector(550, 100)
+				, new Vector(500, 100)
+				, new Vector(500, 50)
+				, new Vector(0, 50)
+			];
+			this.addBody(new Body(lolWall).setCoords(new Vector(0, 200)));
+		}
+		World.prototype.setStatus = function (status){
+			this.isStart=status;
+		}
+		World.prototype.changeStatus = function () {
 			if (this.isStart)
 				this.isStart = false;
 			else
 				this.isStart = true;
 		}
-		World.prototype.getStatus=function(){
+		World.prototype.getStatus = function () {
 			return this.isStart;
 		}
 		World.prototype.setOutOfBoundsBehaviour = function (respawnCoords, isOutOfBoundsFunc) {
@@ -48,6 +85,10 @@ define(
 			this.bodies.push(body);
 			this.bodiesGrid.bodiesHasChanged();
 			return this;
+		}
+		World.prototype.clearBody = function () {
+			this.bodies.splice(0, this.bodies);
+			this.bodiesGrid.bodiesHasChanged();
 		}
 		World.prototype.getBodiesMinPoint = function () {
 			return Polygon.getMinPointOfPolygonsArray(this.bodies);
@@ -83,6 +124,9 @@ define(
 			}
 			this.addParticles(particlesArr);
 			return this;
+		}
+		World.prototype.clearParticles = function () {
+			this.particles.splice(0, this.particles.length);
 		}
 		World.prototype.getGravity = function () {
 			return new Vector(this.gravity.x, this.gravity.y);

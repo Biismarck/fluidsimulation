@@ -4,11 +4,12 @@ define(
     , './buttons/gravityButton'
     , './buttons/startButton'
     , './buttons/nextButton'
+    , './buttons/pauseButton'
     , './mouseRepulsor'
     , './uiCommonModules/mouseCameraMove'
     , './uiCommonModules/mouseCameraZoom'
     , './uiCommonModules/cameraSmartPoint'
-  ], function ($, gravityButton, startButton, nextButton, mouseRepulsor, mouseCameraMove, mouseCameraZoom, cameraSmartPoint) {
+  ], function ($, gravityButton, startButton, nextButton,pauseButton, mouseRepulsor, mouseCameraMove, mouseCameraZoom, cameraSmartPoint) {
     return function (world) {
       return {
         renderer: null,
@@ -45,12 +46,13 @@ define(
           });
           $('#starterButton').click(function () {
             startButton.startSimulation(world);
+            THIS.resetUI();
+          });
+          $('#pauseButton').click(function () {
+            pauseButton.pause(world);
           });
           $('#nextButton').click(function () {
             nextButton.nextStep(world);
-          });
-          $('#colorChangerButton').click(function () {
-            THIS.changeColor();
           });
           $('#show').click(function () {
             $('#rest').slideToggle();
@@ -84,8 +86,8 @@ define(
             shapes.push(bodyShape);
           }
           var bodyGeom = new THREE.ShapeGeometry(shapes);
-          var bodyMesh = new THREE.Mesh(bodyGeom, new THREE.MeshBasicMaterial({ color: 0xcccccc }));
-          this.scene.add(bodyMesh);
+          this.bodyMesh = new THREE.Mesh(bodyGeom, new THREE.MeshBasicMaterial({ color: 0xcccccc }));
+          this.scene.add(this.bodyMesh);
         },
         updateVertices: function () {
           for (var i = 0; i < this.geometry.vertices.length; i++) {
@@ -98,12 +100,10 @@ define(
           this.updateVertices();
           this.renderer.render(this.scene, this.camera);
         },
-        changeColor: function () {
-          this.geometry.colors = [];
-          for (var i = 0; i < this.geometry.vertices.length; i++) {
-            this.geometry.colors[i] = new THREE.Color("#00FF00");
-          }
-          console.log("color changed!");
+        resetUI:function(){
+          this.scene.remove(this.particlesSystem);
+          this.scene.remove(this.bodyMesh);
+          this.addToScene();
         }
       }
     }
