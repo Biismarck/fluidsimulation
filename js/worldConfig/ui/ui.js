@@ -9,7 +9,7 @@ define(
     , './uiCommonModules/mouseCameraMove'
     , './uiCommonModules/mouseCameraZoom'
     , './uiCommonModules/cameraSmartPoint'
-  ], function ($, gravityButton, startButton, nextButton,pauseButton, mouseRepulsor, mouseCameraMove, mouseCameraZoom, cameraSmartPoint) {
+  ], function ($, gravityButton, startButton, nextButton, pauseButton, mouseRepulsor, mouseCameraMove, mouseCameraZoom, cameraSmartPoint) {
     return function (world) {
       return {
         renderer: null,
@@ -24,8 +24,8 @@ define(
           this.renderer.setPixelRatio(2.0);
           this.scene = new THREE.Scene();
           this.camera = new THREE.OrthographicCamera(-$(myCanvas).width() / 2, $(myCanvas).width() / 2, -$(myCanvas).height() / 2, $(myCanvas).height() / 2, -1000, 1000);
-
           this.camera.rotation.x = 180 * Math.PI / 180;
+          this.showTexture = false;
 
           this.addToScene();
           mouseRepulsor(world, this.camera);
@@ -40,6 +40,14 @@ define(
             THIS.camera.top = -$(myCanvas).height() / 2;
             THIS.camera.bottom = $(myCanvas).height() / 2;
             THIS.camera.updateProjectionMatrix();
+          });
+          $('#showTexture').click(function () {
+            if ($(this).is(":checked")) {
+              THIS.showTexture = true;
+            } else {
+              THIS.showTexture = false;
+            }
+            THIS.resetUI();
           });
           $('#gravityChangerButton').click(function () {
             gravityButton.changeGravity(world);
@@ -72,8 +80,27 @@ define(
           this.geometry.colors = [];
           for (let i = 0; i < this.geometry.vertices.length; i++)
             this.geometry.colors[i] = new THREE.Color(world.particles[i].color);
+          if (this.showTexture===true) {
+            var material = new THREE.PointsMaterial({
+              size: 12,
+              vertexColors: THREE.VertexColors,
+              fog: false,
+              sizeAttenuation: false,
+              map: this.getTexture(),
+              blending: THREE.AdditiveBlending,
+              transparent: true
+            });
+          }
+          else {
+            var material = new THREE.PointsMaterial({
+              size: 2,
+              vertexColors: THREE.VertexColors,
+              fog: false,
+              sizeAttenuation: false,
+              blending: THREE.AdditiveBlending
+            });
+          }
 
-          var material = new THREE.PointsMaterial({ size: 2, vertexColors: THREE.VertexColors, fog: false, sizeAttenuation: false });
           this.particlesSystem = new THREE.Points(this.geometry, material);
           this.scene.add(this.particlesSystem);
 
@@ -104,10 +131,26 @@ define(
           this.updateVertices();
           this.renderer.render(this.scene, this.camera);
         },
-        resetUI:function(){
+        resetUI: function () {
           this.scene.remove(this.particlesSystem);
           this.scene.remove(this.bodyMesh);
           this.addToScene();
+        },
+        //初步考虑增加随机性  尝试减少粒子感
+        getTexture: function () {
+          var canvas = document.createElement('canvas');
+          canvas.width = 16;
+          canvas.height = 16;
+          var PI2 = Math.PI * 2;
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = "blue";
+          ctx.beginPath();
+          ctx.arc(8, 8, 8, 0, PI2);
+          ctx.fill();
+
+          var texture = new THREE.Texture(canvas);
+          texture.needsUpdate = true;
+          return texture;
         }
       }
     }
