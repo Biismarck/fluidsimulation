@@ -26,6 +26,7 @@ define(
           this.camera = new THREE.OrthographicCamera(-$(myCanvas).width() / 2, $(myCanvas).width() / 2, -$(myCanvas).height() / 2, $(myCanvas).height() / 2, -1000, 1000);
           this.camera.rotation.x = 180 * Math.PI / 180;
           this.showTexture = false;
+          this.ParticleColor='#0000FF';
 
           this.addToScene();
           mouseRepulsor(world, this.camera);
@@ -54,6 +55,7 @@ define(
           });
           $('#colorChangerButton').click(function () {
             world.setParticlesColor('#00FF00');
+            THIS.ParticleColor='#00ff00'
             THIS.resetUI();
           });
           $('#starterButton').click(function () {
@@ -83,7 +85,6 @@ define(
           if (this.showTexture===true) {
             var material = new THREE.PointsMaterial({
               size: 12,
-              vertexColors: THREE.VertexColors,
               fog: false,
               sizeAttenuation: false,
               map: this.getTexture(),
@@ -134,6 +135,7 @@ define(
         resetUI: function () {
           this.scene.remove(this.particlesSystem);
           this.scene.remove(this.bodyMesh);
+          this.ParticleColor='#0000FF';
           this.addToScene();
         },
         //初步考虑增加随机性  尝试减少粒子感
@@ -143,7 +145,7 @@ define(
           canvas.height = 16;
           var PI2 = Math.PI * 2;
           var ctx = canvas.getContext('2d');
-          ctx.fillStyle = "blue";
+          ctx.fillStyle =  this.ParticleColor;
           ctx.beginPath();
           ctx.arc(8, 8, 8, 0, PI2);
           ctx.fill();

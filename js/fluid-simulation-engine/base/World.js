@@ -74,6 +74,7 @@ define(
 			this.isOutOfBoundsFunc = isOutOfBoundsFunc;
 			return this;
 		}
+		//设置粒子间距  过小会NAN
 		World.prototype.setCoeffs = function (coeffs) {
 			for (var i in coeffs) {
 				this.coeffs[i] = coeffs[i];
@@ -81,6 +82,7 @@ define(
 			this.grid.setCellSize(this.coeffs.h);
 			return this;
 		}
+		//添加墙
 		World.prototype.addBody = function (body) {
 			this.bodies.push(body);
 			this.bodiesGrid.bodiesHasChanged();
@@ -100,15 +102,7 @@ define(
 			this.repulsiveForceSources.push(repulsiveForceSource);
 			return this;
 		}
-		World.prototype.addParticles = function (particles) {
-			if (Array.isArray(particles)) {
-				for (var i = 0; i < particles.length; i++)
-					this.particles.push(particles[i]);
-			}
-			else
-				this.particles.push(particles);
-			return this;
-		}
+		//添加粒子
 		World.prototype.addParticlesGrid = function (X, Y, startX, startY, particleClass) {
 			var space = 0.340;
 			var particlesArr = [];
@@ -123,6 +117,15 @@ define(
 				}
 			}
 			this.addParticles(particlesArr);
+			return this;
+		}		
+		World.prototype.addParticles = function (particles) {
+			if (Array.isArray(particles)) {
+				for (var i = 0; i < particles.length; i++)
+					this.particles.push(particles[i]);
+			}
+			else
+				this.particles.push(particles);
 			return this;
 		}
 		World.prototype.setParticlesColor = function (color) {
@@ -152,6 +155,7 @@ define(
 			this.timeSpeed = timeSpeed;
 			return this;
 		}
+		//计算dt之后的粒子状况
 		World.prototype.nextStep = function (dt) {
 			const maxDt = 33;
 			dt = dt > maxDt ? maxDt : dt;

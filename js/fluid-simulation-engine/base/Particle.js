@@ -1,7 +1,7 @@
 define(['../geometry/Vector'], function (Vector) {
 	function Particle(x, y) {
 		this.coords = new Vector(x, y);
-		this.color = "#f00";
+		this.color = "#0000ff";
 		this.init();
 		this.coeffs = Particle.coeffs;
 	}
