@@ -2,6 +2,7 @@ define(
   [
     'jquery'
     , './buttons/gravityButton'
+    , './buttons/terrainButton'
     , './buttons/startButton'
     , './buttons/nextButton'
     , './buttons/pauseButton'
@@ -9,7 +10,7 @@ define(
     , './uiCommonModules/mouseCameraMove'
     , './uiCommonModules/mouseCameraZoom'
     , './uiCommonModules/cameraSmartPoint'
-  ], function ($, gravityButton, startButton, nextButton, pauseButton, mouseRepulsor, mouseCameraMove, mouseCameraZoom, cameraSmartPoint) {
+  ], function ($, gravityButton, terrainButton, startButton, nextButton, pauseButton, mouseRepulsor, mouseCameraMove, mouseCameraZoom, cameraSmartPoint) {
     return function (world) {
       return {
         renderer: null,
@@ -56,6 +57,10 @@ define(
           $('#colorChangerButton').click(function () {
             world.setParticlesColor('#00FF00');
             THIS.ParticleColor='#00ff00'
+            THIS.resetUI();
+          });
+          $('#terrainChangeButton').click(function() {            
+            terrainButton.changeTerrain(world);
             THIS.resetUI();
           });
           $('#starterButton').click(function () {
