@@ -99,6 +99,9 @@ define(
               blending: THREE.AdditiveBlending,
               transparent: true
             });
+            var blurFilter = new PIXI.filters.BlurFilter();  
+            blurFilter.blur = 80;  
+            blurFilter.passes = 10;
           }
           else {
             var material = new THREE.PointsMaterial({
