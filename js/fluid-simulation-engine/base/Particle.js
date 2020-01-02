@@ -7,14 +7,14 @@ define(['../geometry/Vector'], function (Vector) {
 	}
 	Particle.coeffs = {
 		 k: 0.2
-		,k_near: 0.6
+		,k_near: 0.5
 		,p0: 5
 		,visc_lin: 0.105
 		,visc_qua: 0.055
-		,d_stick: 35		//Wall sticking distance
+		,d_stick: 10		//Wall sticking distance
 		,k_stick: 0.03
 		,wall_friction: 0.1	//Wall sideways friction (vx *= wall_friction) (0 - max. friction; 1 - no friction)
-		,wall_normal: 0.9	//Wall bounce energy conservation
+		,wall_normal: 0.1	//Wall bounce energy conservation
 		,mass: 1.0
 	};
 	Particle.prototype.init = function () {
