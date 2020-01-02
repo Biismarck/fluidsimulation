@@ -99,9 +99,6 @@ define(
               blending: THREE.AdditiveBlending,
               transparent: true
             });
-            var blurFilter = new PIXI.filters.BlurFilter();  
-            blurFilter.blur = 80;  
-            blurFilter.passes = 10;
           }
           else {
             var material = new THREE.PointsMaterial({
@@ -115,7 +112,7 @@ define(
 
           this.particlesSystem = new THREE.Points(this.geometry, material);
           this.scene.add(this.particlesSystem);
-
+          console.log(this.particlesSystem);
           //Bodies:
           var shapes = [];
           for (let i = 0; i < world.bodies.length; i++) {
@@ -159,10 +156,19 @@ define(
           ctx.fillStyle =  this.ParticleColor;
           ctx.beginPath();
           ctx.arc(8, 8, 8, 0, PI2);
-          ctx.fill();
+          //ctx.fill();
+          // Create gradient
+          var grd=ctx.createRadialGradient(10,10,0,10,10,10);
+          grd.addColorStop(0,world.particles[1].color);
+          grd.addColorStop(1,"black");
+
+          // Fill with gradient
+          ctx.fillStyle=grd;
+          ctx.fillRect(0,0,40,40);
 
           var texture = new THREE.Texture(canvas);
           texture.needsUpdate = true;
+
           return texture;
         }
       }
