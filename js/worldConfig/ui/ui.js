@@ -62,10 +62,10 @@ define(
             THIS.ParticleColor=setColor.value
             THIS.resetUI();
           });
-          $('#terrainChangeButton').click(function() {            
-            terrainButton.changeTerrain(world);
-            THIS.resetUI();
-          });
+          // $('#terrainChangeButton').click(function() {            
+          //   terrainButton.changeTerrain(world);
+          //   THIS.resetUI();
+          // });
           $('#starterButton').click(function () {
             startButton.startSimulation(world);
             THIS.resetUI();
@@ -112,7 +112,6 @@ define(
 
           this.particlesSystem = new THREE.Points(this.geometry, material);
           this.scene.add(this.particlesSystem);
-          console.log(this.particlesSystem);
           //Bodies:
           var shapes = [];
           for (let i = 0; i < world.bodies.length; i++) {
@@ -143,7 +142,6 @@ define(
         resetUI: function () {
           this.scene.remove(this.particlesSystem);
           this.scene.remove(this.bodyMesh);
-          //this.ParticleColor='#0000FF';修改了texture增加之后无法改变
           this.addToScene();
         },
         //初步考虑增加随机性  尝试减少粒子感
@@ -158,7 +156,7 @@ define(
           ctx.arc(8, 8, 8, 0, PI2);
           //ctx.fill();
           // Create gradient
-          var grd=ctx.createRadialGradient(10,10,0,10,10,10);
+          var grd=ctx.createRadialGradient(8,8,3,8,8,8);
           grd.addColorStop(0,world.particles[1].color);
           grd.addColorStop(1,"black");
 
