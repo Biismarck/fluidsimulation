@@ -27,8 +27,9 @@ define(
           this.camera = new THREE.OrthographicCamera(-$(myCanvas).width() / 2, $(myCanvas).width() / 2, -$(myCanvas).height() / 2, $(myCanvas).height() / 2, -1000, 1000);
           this.camera.rotation.x = 180 * Math.PI / 180;
           this.showTexture = false;
-          this.ParticleColor='#0000FF';
-
+          this.ParticleColor='#0000ff';
+          //this.setColor=document.getElementById('callback');
+          //this.color=this.setColor.value;
           this.addToScene();
           mouseRepulsor(world, this.camera);
           mouseCameraMove(this.camera);
@@ -42,7 +43,7 @@ define(
             THIS.camera.top = -$(myCanvas).height() / 2;
             THIS.camera.bottom = $(myCanvas).height() / 2;
             THIS.camera.updateProjectionMatrix();
-          });
+          });         
           $('#showTexture').click(function () {
             if ($(this).is(":checked")) {
               THIS.showTexture = true;
@@ -55,8 +56,10 @@ define(
             gravityButton.changeGravity(world);
           });
           $('#colorChangerButton').click(function () {
-            world.setParticlesColor('#00FF00');
-            THIS.ParticleColor='#00ff00'
+            var setColor=document.getElementById('callback');
+				    console.log(setColor.value);
+            world.setParticlesColor(setColor.value);
+            THIS.ParticleColor=setColor.value
             THIS.resetUI();
           });
           $('#terrainChangeButton').click(function() {            
@@ -89,7 +92,7 @@ define(
             this.geometry.colors[i] = new THREE.Color(world.particles[i].color);
           if (this.showTexture===true) {
             var material = new THREE.PointsMaterial({
-              size: 12,
+              size: 20,
               fog: false,
               sizeAttenuation: false,
               map: this.getTexture(),
@@ -109,7 +112,7 @@ define(
 
           this.particlesSystem = new THREE.Points(this.geometry, material);
           this.scene.add(this.particlesSystem);
-
+          console.log(this.particlesSystem);
           //Bodies:
           var shapes = [];
           for (let i = 0; i < world.bodies.length; i++) {
@@ -140,7 +143,7 @@ define(
         resetUI: function () {
           this.scene.remove(this.particlesSystem);
           this.scene.remove(this.bodyMesh);
-          this.ParticleColor='#0000FF';
+          //this.ParticleColor='#0000FF';修改了texture增加之后无法改变
           this.addToScene();
         },
         //初步考虑增加随机性  尝试减少粒子感
@@ -153,10 +156,19 @@ define(
           ctx.fillStyle =  this.ParticleColor;
           ctx.beginPath();
           ctx.arc(8, 8, 8, 0, PI2);
-          ctx.fill();
+          //ctx.fill();
+          // Create gradient
+          var grd=ctx.createRadialGradient(10,10,0,10,10,10);
+          grd.addColorStop(0,world.particles[1].color);
+          grd.addColorStop(1,"black");
+
+          // Fill with gradient
+          ctx.fillStyle=grd;
+          ctx.fillRect(0,0,40,40);
 
           var texture = new THREE.Texture(canvas);
           texture.needsUpdate = true;
+
           return texture;
         }
       }

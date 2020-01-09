@@ -92,7 +92,7 @@ define(['./LineSegment', './Vector'], function (LineSegment, Vector) {
 		}
 		return volume;
 	}
-
+//惯性
 	Polygon.prototype.getMomentOfInertia = function () {		//Faster and more precisious method needed
 		var minPoint = this.minPoint(false);
 		var maxPoint = this.maxPoint(false);
